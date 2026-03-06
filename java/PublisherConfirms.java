@@ -1,7 +1,6 @@
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmCallback;
 import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 
 import java.time.Duration;
 import java.util.LinkedList;
@@ -15,11 +14,7 @@ public class PublisherConfirms {
     static final int MESSAGE_COUNT = 50_000;
 
     static Connection createConnection() throws Exception {
-        ConnectionFactory cf = new ConnectionFactory();
-        cf.setHost("localhost");
-        cf.setUsername("guest");
-        cf.setPassword("guest");
-        return cf.newConnection();
+        return ConnectionManager.createConnection("guest", "guest");
     }
 
     static final int MAX_OUTSTANDING = 1000; // Confirmation window

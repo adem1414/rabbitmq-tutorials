@@ -7,6 +7,9 @@ import java.nio.charset.StandardCharsets;
 
 public class RabbitMQPublisher {
 
+    private RabbitMQPublisher() {
+    }
+
     public static void publish(String exchangeName, BuiltinExchangeType exchangeType, String routingKey, AMQP.BasicProperties props, String message) throws Exception {
         try (Connection connection = ConnectionManager.createConnection();
              Channel channel = connection.createChannel()) {

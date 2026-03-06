@@ -11,11 +11,9 @@ public class RPCServer {
     }
 
     public static void main(String[] argv) throws Exception {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-
-        Connection connection = factory.newConnection();
+        Connection connection = ConnectionManager.createConnection();
         Channel channel = connection.createChannel();
+
         channel.queueDeclare(RPC_QUEUE_NAME, false, false, false, null);
         channel.queuePurge(RPC_QUEUE_NAME);
 
@@ -23,6 +21,7 @@ public class RPCServer {
 
         System.out.println(" [x] Awaiting RPC requests");
 
+        Object monitor = new Object();
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             AMQP.BasicProperties replyProps = new AMQP.BasicProperties
                     .Builder()
@@ -35,15 +34,29 @@ public class RPCServer {
                 int n = Integer.parseInt(message);
 
                 System.out.println(" [.] fib(" + message + ")");
-                response += fib(n);
+                response = "" + fib(n);
             } catch (RuntimeException e) {
-                System.out.println(" [.] " + e);
+                System.out.println(" [.] " + e.toString());
             } finally {
                 channel.basicPublish("", delivery.getProperties().getReplyTo(), replyProps, response.getBytes("UTF-8"));
                 channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
+                // RabbitMq consumer worker thread uses notify to deblock a consumer thread
+                synchronized (monitor) {
+                    monitor.notify();
+                }
             }
         };
 
-        channel.basicConsume(RPC_QUEUE_NAME, false, deliverCallback, (consumerTag -> {}));
+        channel.basicConsume(RPC_QUEUE_NAME, false, deliverCallback, (consumerTag -> { }));
+        // Wait and be prepared to consume the message from the "rpc_queue"
+        while (true) {
+            synchronized (monitor) {
+                try {
+                    monitor.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

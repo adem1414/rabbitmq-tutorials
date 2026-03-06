@@ -1,5 +1,8 @@
 public class StringUtils {
 
+    private StringUtils() {
+    }
+
     public static String joinStrings(String[] strings, String delimiter, int startIndex) {
         int length = strings.length;
         if (length == 0) return "";

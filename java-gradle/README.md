@@ -27,55 +27,55 @@ You can easily set this up by [installing RabbitMQ](https://www.rabbitmq.com/doc
 
 ```shell
 # terminal tab 1
-./gradlew -Pmain=Recv run
+./gradlew -Pmain=rabbitmq.entities.Recv run
 
 # terminal tab 2
-./gradlew -Pmain=Send run
+./gradlew -Pmain=rabbitmq.entities.Send run
 ```
 
 #### [Tutorial two: Work Queues](https://www.rabbitmq.com/tutorials/tutorial-two-java.html):
 
 ```shell
 # terminal tab 1
-./gradlew -Pmain=Worker run
+./gradlew -Pmain=rabbitmq.entities.Worker run
 
 # terminal tab 2
-./gradlew -Pmain=Worker run
+./gradlew -Pmain=rabbitmq.entities.Worker run
 
 # terminal tab 3
-./gradlew -Pmain=NewTask run --args "First Message"
-./gradlew -Pmain=NewTask run --args "Second Message"
-./gradlew -Pmain=NewTask run --args "Third Message"
-./gradlew -Pmain=NewTask run --args "Fourth Message"
-./gradlew -Pmain=NewTask run --args "Fifth Message"
+./gradlew -Pmain=rabbitmq.entities.NewTask run --args "First Message"
+./gradlew -Pmain=rabbitmq.entities.NewTask run --args "Second Message"
+./gradlew -Pmain=rabbitmq.entities.NewTask run --args "Third Message"
+./gradlew -Pmain=rabbitmq.entities.NewTask run --args "Fourth Message"
+./gradlew -Pmain=rabbitmq.entities.NewTask run --args "Fifth Message"
 ```
 
 #### [Tutorial three: Publish/Subscribe](https://www.rabbitmq.com/tutorials/tutorial-three-java.html)
 
 ```shell
 # terminal tab 1
-./gradlew -Pmain=ReceiveLogs run
+./gradlew -Pmain=rabbitmq.entities.ReceiveLogs run
 
 # terminal tab 2
-./gradlew -Pmain=ReceiveLogs run
+./gradlew -Pmain=rabbitmq.entities.ReceiveLogs run
 
 # terminal tab 3
-./gradlew -Pmain=EmitLog run
+./gradlew -Pmain=rabbitmq.entities.EmitLog run
 ```
 
 #### [Tutorial four: Routing](https://www.rabbitmq.com/tutorials/tutorial-four-java.html)
 
 ```shell
 # terminal tab 1
-./gradlew -Pmain=ReceiveLogsDirect run --args "warning error"
+./gradlew -Pmain=rabbitmq.entities.ReceiveLogsDirect run --args "warning error"
 
 # terminal tab 2
-./gradlew -Pmain=ReceiveLogsDirect run --args "info warning error"
+./gradlew -Pmain=rabbitmq.entities.ReceiveLogsDirect run --args "info warning error"
 
 # terminal tab 3
-./gradlew -Pmain=EmitLogDirect run --args "info 'Run. Run. Or it will explode'"
-./gradlew -Pmain=EmitLogDirect run --args "warning 'Run. Run. Or it will explode'"
-./gradlew -Pmain=EmitLogDirect run --args "error 'Run. Run. Or it will explode'"
+./gradlew -Pmain=rabbitmq.entities.EmitLogDirect run --args "info 'Run. Run. Or it will explode'"
+./gradlew -Pmain=rabbitmq.entities.EmitLogDirect run --args "warning 'Run. Run. Or it will explode'"
+./gradlew -Pmain=rabbitmq.entities.EmitLogDirect run --args "error 'Run. Run. Or it will explode'"
 ```
 
 #### [Tutorial five: Topics](https://www.rabbitmq.com/tutorials/tutorial-five-java.html)
@@ -83,20 +83,20 @@ You can easily set this up by [installing RabbitMQ](https://www.rabbitmq.com/doc
 ```shell
 # terminal tab 1
 # To receive all the logs:
-./gradlew -Pmain=ReceiveLogsTopic run --args "#"
+./gradlew -Pmain=rabbitmq.entities.ReceiveLogsTopic run --args "#"
 
 # To receive all logs from the facility "kern":
-./gradlew -Pmain=ReceiveLogsTopic run --args "kern.*"
+./gradlew -Pmain=rabbitmq.entities.ReceiveLogsTopic run --args "kern.*"
 
 # Or if you want to hear only about "critical" logs:
-./gradlew -Pmain=ReceiveLogsTopic run --args "*.critical"
+./gradlew -Pmain=rabbitmq.entities.ReceiveLogsTopic run --args "*.critical"
 
 # You can create multiple bindings:
-./gradlew -Pmain=ReceiveLogsTopic run --args "kern.* *.critical"
+./gradlew -Pmain=rabbitmq.entities.ReceiveLogsTopic run --args "kern.* *.critical"
 
 # terminal tab 2
 # And to emit a log with a routing key "kern.critical" type:
-./gradlew -Pmain=EmitLogTopic run --args "kern.critical A critical kernel error"
+./gradlew -Pmain=rabbitmq.entities.EmitLogTopic run --args "kern.critical A critical kernel error"
 ```
 
 #### [Tutorial six: RPC](https://www.rabbitmq.com/tutorials/tutorial-six-java.html)
@@ -104,16 +104,16 @@ You can easily set this up by [installing RabbitMQ](https://www.rabbitmq.com/doc
 ```shell
 # terminal tab 1
 # Our RPC service is now ready. We can start the server:
-./gradlew -Pmain=RPCServer run
+./gradlew -Pmain=rabbitmq.entities.RPCServer run
 
 # terminal tab 2
 # To request a fibonacci number run the client:
-./gradlew -Pmain=RPCClient run
+./gradlew -Pmain=rabbitmq.entities.RPCClient run
 ```
 
 #### [Tutorial seven: Publisher Confirms](https://www.rabbitmq.com/tutorials/tutorial-seven-java.html)
 
 ```shell
 # terminal tab 1
-./gradlew -Pmain=PublisherConfirms run
+./gradlew -Pmain=rabbitmq.entities.PublisherConfirms run
 ```

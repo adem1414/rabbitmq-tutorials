@@ -5,16 +5,14 @@ public class ReceiveLogsDirect {
     private static final String EXCHANGE_NAME = "direct_logs";
 
     public static void main(String[] argv) throws Exception {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        Connection connection = factory.newConnection();
+        Connection connection = ConnectionManager.createConnection();
         Channel channel = connection.createChannel();
 
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
         String queueName = channel.queueDeclare().getQueue();
 
         if (argv.length < 1) {
-            System.err.println("Usage: ReceiveLogsDirect [info] [warning] [error]");
+            System.err.println("Usage: rabbitmq.entities.ReceiveLogsDirect [info] [warning] [error]");
             System.exit(1);
         }
 
@@ -31,4 +29,3 @@ public class ReceiveLogsDirect {
         });
     }
 }
-
