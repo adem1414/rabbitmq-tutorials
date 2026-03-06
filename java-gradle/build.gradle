@@ -24,6 +24,5 @@ test {
 }
 
 application {
-    mainClass = project.hasProperty("main") ?
-            project.getProperty("main") : "NULL"
+    mainClass = providers.gradleProperty('main').orElse("NULL")
 }
